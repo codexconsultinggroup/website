@@ -6,13 +6,16 @@
     <title>Codex Consulting Group | Software Architecture, AI & SaaS Solutions</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Font Inter -->
+    <!-- Google Font Inter & Fira Code -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Stripe JS (Custom/Embedded Checkout SDK) -->
+    <script src="https://js.stripe.com/v3/"></script>
+
     <!-- Custom Tailwind Configuration -->
     <script>
         tailwind.config = {
@@ -51,11 +54,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .text-gradient-teal {
-            background: linear-gradient(135deg, #00b4d8 0%, #008b99 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
         .glow-effect {
             box-shadow: 0 0 35px -5px rgba(0, 180, 216, 0.25);
         }
@@ -88,7 +86,7 @@
                     <a href="#about" class="text-sm font-medium text-slate-300 hover:text-brand-cyan transition-colors">About Us</a>
                     <a href="#services" class="text-sm font-medium text-slate-300 hover:text-brand-cyan transition-colors">Services</a>
                     <a href="#projects" class="text-sm font-medium text-slate-300 hover:text-brand-cyan transition-colors">Projects</a>
-                    <a href="#contact" class="px-5 py-2.5 text-sm font-semibold text-navy-900 bg-brand-cyan hover:bg-teal-400 rounded-lg shadow-lg shadow-brand-cyan/20 transition-all duration-300 hover:scale-105">Get in Touch</a>
+                    <a href="#payment-portal" class="px-5 py-2.5 text-sm font-semibold text-navy-900 bg-brand-cyan hover:bg-teal-400 rounded-lg shadow-lg shadow-brand-cyan/20 transition-all duration-300 hover:scale-105">Client Checkout</a>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -106,13 +104,12 @@
             <a href="#about" class="mobile-link block py-2 text-base font-medium text-slate-300 hover:text-brand-cyan">About Us</a>
             <a href="#services" class="mobile-link block py-2 text-base font-medium text-slate-300 hover:text-brand-cyan">Services</a>
             <a href="#projects" class="mobile-link block py-2 text-base font-medium text-slate-300 hover:text-brand-cyan">Projects</a>
-            <a href="#contact" class="mobile-link block mt-4 w-full text-center px-5 py-3 text-sm font-semibold text-navy-900 bg-brand-cyan rounded-lg">Get in Touch</a>
+            <a href="#payment-portal" class="mobile-link block mt-4 w-full text-center px-5 py-3 text-sm font-semibold text-navy-900 bg-brand-cyan rounded-lg">Client Checkout</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-navy-900 text-white overflow-hidden">
-        <!-- Background Ambient Glow -->
         <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-cyan/10 rounded-full blur-[120px] pointer-events-none"></div>
         <div class="absolute top-1/3 right-10 w-[400px] h-[400px] bg-brand-teal/10 rounded-full blur-[100px] pointer-events-none"></div>
 
@@ -135,8 +132,8 @@
                     </p>
 
                     <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
-                        <a href="#contact" class="w-full sm:w-auto px-8 py-4 bg-brand-cyan hover:bg-teal-400 text-navy-900 font-bold rounded-xl shadow-xl shadow-brand-cyan/25 transition-all duration-300 hover:scale-105 text-center">
-                            Schedule a Tech Audit
+                        <a href="#payment-portal" class="w-full sm:w-auto px-8 py-4 bg-brand-cyan hover:bg-teal-400 text-navy-900 font-bold rounded-xl shadow-xl shadow-brand-cyan/25 transition-all duration-300 hover:scale-105 text-center">
+                            Schedule & Retain Services
                         </a>
                         <a href="#projects" class="w-full sm:w-auto px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl border border-slate-700 transition-all duration-300 text-center flex items-center justify-center gap-2">
                             <span>Explore Projects</span>
@@ -164,7 +161,6 @@
                 <!-- Right Visual: Interactive Code Box -->
                 <div class="lg:col-span-5">
                     <div class="bg-navy-950 rounded-2xl border border-slate-800 shadow-2xl overflow-hidden glow-effect">
-                        <!-- Code Header -->
                         <div class="bg-slate-900/90 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
                             <div class="flex items-center space-x-2">
                                 <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
@@ -174,7 +170,6 @@
                             <span class="text-xs font-mono text-slate-400">architecture.config.ts</span>
                             <i class="fa-solid fa-terminal text-xs text-slate-500"></i>
                         </div>
-                        <!-- Code Body -->
                         <div class="p-6 font-mono text-xs sm:text-sm text-slate-300 space-y-3 leading-relaxed">
                             <p class="text-slate-500">// Initialize Codex Enterprise Architecture</p>
                             <p><span class="text-purple-400">import</span> { <span class="text-brand-cyan">AIAutomation</span>, <span class="text-brand-cyan">SaaSScale</span> } <span class="text-purple-400">from</span> <span class="text-emerald-400">'@codex/consulting'</span>;</p>
@@ -202,7 +197,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-12 gap-12 items-center">
                 
-                <!-- Graphic Image / Emblem -->
                 <div class="lg:col-span-5">
                     <div class="relative mx-auto max-w-md lg:max-w-none">
                         <div class="absolute -inset-4 bg-gradient-to-r from-brand-teal to-brand-cyan rounded-3xl blur-lg opacity-30"></div>
@@ -227,7 +221,6 @@
                     </div>
                 </div>
 
-                <!-- Text Content -->
                 <div class="lg:col-span-7 space-y-6">
                     <div class="inline-block px-3 py-1 bg-brand-light text-brand-teal font-semibold rounded-md text-xs uppercase tracking-wider">
                         About Codex Consulting Group
@@ -239,10 +232,9 @@
                         Founded in San Francisco, Codex Consulting Group is an elite technology consultancy dedicated to solving complex software engineering challenges. We bridge the gap between high-level business vision and resilient, clean code architecture.
                     </p>
                     <p class="text-slate-600 leading-relaxed">
-                        We don't just deliver temporary fixes; we build enterprise-grade software foundations designed to scale seamlessly with your market demand. From cloud-native SaaS platforms to intelligent AI automation workflows, our senior engineering team ensures your technology is a long-term asset.
+                        We don't just deliver temporary fixes; we build enterprise-grade software foundations designed to scale seamlessly with your market demand.
                     </p>
 
-                    <!-- Core Values Cards -->
                     <div class="grid sm:grid-cols-2 gap-4 pt-4">
                         <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
                             <div class="w-10 h-10 rounded-lg bg-brand-cyan/10 text-brand-teal flex items-center justify-center font-bold mb-3">
@@ -280,10 +272,8 @@
                 </p>
             </div>
 
-            <!-- Service Grid -->
             <div class="grid md:grid-cols-3 gap-8">
                 
-                <!-- Service 1: AI -->
                 <div class="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-sm card-hover flex flex-col justify-between">
                     <div>
                         <div class="w-14 h-14 rounded-xl bg-navy-900 text-brand-cyan flex items-center justify-center text-2xl mb-6 shadow-md">
@@ -299,13 +289,12 @@
                             <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-teal"></i> Automated Workflow Pipelines</li>
                         </ul>
                     </div>
-                    <a href="#contact" class="text-sm font-bold text-brand-teal hover:text-navy-900 flex items-center gap-2 transition-colors">
+                    <a href="#payment-portal" class="text-sm font-bold text-brand-teal hover:text-navy-900 flex items-center gap-2 transition-colors">
                         <span>Discuss AI Integration</span>
                         <i class="fa-solid fa-chevron-right text-xs"></i>
                     </a>
                 </div>
 
-                <!-- Service 2: SaaS -->
                 <div class="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-sm card-hover flex flex-col justify-between">
                     <div>
                         <div class="w-14 h-14 rounded-xl bg-navy-900 text-brand-cyan flex items-center justify-center text-2xl mb-6 shadow-md">
@@ -321,13 +310,12 @@
                             <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-teal"></i> Billing & Auth Integrations</li>
                         </ul>
                     </div>
-                    <a href="#contact" class="text-sm font-bold text-brand-teal hover:text-navy-900 flex items-center gap-2 transition-colors">
+                    <a href="#payment-portal" class="text-sm font-bold text-brand-teal hover:text-navy-900 flex items-center gap-2 transition-colors">
                         <span>Scale Your SaaS</span>
                         <i class="fa-solid fa-chevron-right text-xs"></i>
                     </a>
                 </div>
 
-                <!-- Service 3: Custom Coding -->
                 <div class="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-sm card-hover flex flex-col justify-between">
                     <div>
                         <div class="w-14 h-14 rounded-xl bg-navy-900 text-brand-cyan flex items-center justify-center text-2xl mb-6 shadow-md">
@@ -343,7 +331,7 @@
                             <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-teal"></i> Full-Stack Development</li>
                         </ul>
                     </div>
-                    <a href="#contact" class="text-sm font-bold text-brand-teal hover:text-navy-900 flex items-center gap-2 transition-colors">
+                    <a href="#payment-portal" class="text-sm font-bold text-brand-teal hover:text-navy-900 flex items-center gap-2 transition-colors">
                         <span>Consult on Code</span>
                         <i class="fa-solid fa-chevron-right text-xs"></i>
                     </a>
@@ -370,10 +358,7 @@
                 </p>
             </div>
 
-            <!-- Project Cards Grid -->
             <div class="grid md:grid-cols-3 gap-8">
-                
-                <!-- Project 1 -->
                 <div class="bg-navy-950 rounded-2xl overflow-hidden border border-slate-800 flex flex-col justify-between card-hover">
                     <div>
                         <div class="relative h-48 overflow-hidden bg-slate-800">
@@ -399,7 +384,6 @@
                     </div>
                 </div>
 
-                <!-- Project 2 -->
                 <div class="bg-navy-950 rounded-2xl overflow-hidden border border-slate-800 flex flex-col justify-between card-hover">
                     <div>
                         <div class="relative h-48 overflow-hidden bg-slate-800">
@@ -425,7 +409,6 @@
                     </div>
                 </div>
 
-                <!-- Project 3 -->
                 <div class="bg-navy-950 rounded-2xl overflow-hidden border border-slate-800 flex flex-col justify-between card-hover">
                     <div>
                         <div class="relative h-48 overflow-hidden bg-slate-800">
@@ -455,108 +438,74 @@
         </div>
     </section>
 
-    <!-- Contact Us Section -->
-    <section id="contact" class="py-24 bg-white relative">
+    <!-- Payment Portal / Contact Section -->
+    <section id="payment-portal" class="py-24 bg-white relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-12 gap-12">
+            <div class="grid lg:grid-cols-12 gap-12 items-start">
                 
-                <!-- Contact Details -->
+                <!-- Details -->
                 <div class="lg:col-span-5 space-y-8">
                     <div>
                         <span class="px-3.5 py-1 bg-brand-light text-brand-teal font-semibold rounded-md text-xs uppercase tracking-wider">
-                            Start a Conversation
+                            Seamless Payment Portal
                         </span>
                         <h2 class="text-3xl sm:text-4xl font-extrabold text-navy-900 tracking-tight mt-3">
-                            Let's Build Something Exceptional
+                            Initiate Engagement & Payments
                         </h2>
                         <p class="text-slate-600 mt-4 leading-relaxed">
-                            Have a complex engineering challenge or an upcoming software project? Reach out to schedule a consultation with our senior technical partners.
+                            Retain our technical consultation or pay project milestones instantly through our secure Stripe-powered checkout portal.
                         </p>
                     </div>
 
                     <div class="space-y-6">
                         <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-slate-100 text-brand-teal flex items-center justify-center shrink-0">
-                                <i class="fa-solid fa-location-dot text-xl"></i>
+                            <div class="w-12 h-12 rounded-xl bg-slate-100 text-brand-teal flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-shield-halved"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-navy-900">San Francisco Headquarters</h4>
-                                <p class="text-slate-500 text-sm">420 Taylor Street<br>San Francisco, CA 94102</p>
+                                <h4 class="font-bold text-navy-900">256-Bit Encrypted Payments</h4>
+                                <p class="text-slate-500 text-sm">All transactions are safely processed through Stripe's high-security PCI-DSS compliant engine.</p>
                             </div>
                         </div>
 
                         <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-slate-100 text-brand-teal flex items-center justify-center shrink-0">
-                                <i class="fa-solid fa-envelope text-xl"></i>
+                            <div class="w-12 h-12 rounded-xl bg-slate-100 text-brand-teal flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-location-dot"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-navy-900">Email Inquiries</h4>
-                                <p class="text-slate-500 text-sm">info@codexconsultinggroup.com</p>
+                                <h4 class="font-bold text-navy-900">San Francisco HQ</h4>
+                                <p class="text-slate-500 text-sm">Codex Consulting Group, Market St, San Francisco, CA</p>
                             </div>
                         </div>
 
                         <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-slate-100 text-brand-teal flex items-center justify-center shrink-0">
-                                <i class="fa-solid fa-clock text-xl"></i>
+                            <div class="w-12 h-12 rounded-xl bg-slate-100 text-brand-teal flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-envelope"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-navy-900">Operating Hours</h4>
-                                <p class="text-slate-500 text-sm">Monday – Friday: 10:00 AM – 6:00 PM PST</p>
+                                <h4 class="font-bold text-navy-900">Direct Contact</h4>
+                                <p class="text-slate-500 text-sm">contact@codexconsulting.io</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Contact Form Card -->
+                <!-- Stripe Checkout Form Container -->
                 <div class="lg:col-span-7">
-                    <div class="bg-slate-50 p-8 sm:p-10 rounded-2xl border border-slate-200 shadow-lg relative">
-                        <!-- Notification Toast -->
-                        <div id="form-toast" class="hidden mb-6 p-4 rounded-xl text-sm font-medium transition-all"></div>
-
-                        <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
-                            <div class="grid sm:grid-cols-2 gap-6">
-                                <div>
-                                    <label for="full-name" class="block text-sm font-semibold text-slate-700 mb-2">Full Name *</label>
-                                    <input type="text" id="full-name" required placeholder="Jane Doe" 
-                                           class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-cyan focus:border-transparent outline-none transition-all">
-                                </div>
-                                <div>
-                                    <label for="email" class="block text-sm font-semibold text-slate-700 mb-2">Email Address *</label>
-                                    <input type="email" id="email" required placeholder="jane@company.com" 
-                                           class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-cyan focus:border-transparent outline-none transition-all">
-                                </div>
+                    <div class="bg-navy-900 p-8 rounded-2xl border border-slate-800 shadow-2xl relative glow-effect">
+                        <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-credit-card text-brand-cyan"></i>
+                            Secure Checkout
+                        </h3>
+                        <p class="text-slate-400 text-xs mb-6">Complete your payment details below to lock in your advisory block.</p>
+                        
+                        <!-- Placeholder for Embedded Stripe Checkout Form -->
+                        <div id="checkout-form" class="bg-white p-6 rounded-xl min-h-[300px]">
+                            <div id="loading-spinner" class="flex flex-col items-center justify-center py-12 text-slate-500">
+                                <i class="fa-solid fa-circle-notch fa-spin text-3xl text-brand-cyan mb-3"></i>
+                                <span class="text-sm font-medium">Initializing secure payment form...</span>
                             </div>
-
-                            <div class="grid sm:grid-cols-2 gap-6">
-                                <div>
-                                    <label for="company" class="block text-sm font-semibold text-slate-700 mb-2">Company / Organization</label>
-                                    <input type="text" id="company" placeholder="Acme Corp" 
-                                           class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-cyan focus:border-transparent outline-none transition-all">
-                                </div>
-                                <div>
-                                    <label for="service-interest" class="block text-sm font-semibold text-slate-700 mb-2">Primary Area of Interest</label>
-                                    <select id="service-interest" 
-                                            class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-cyan focus:border-transparent outline-none transition-all bg-white">
-                                        <option value="ai">Artificial Intelligence & Automation</option>
-                                        <option value="saas">SaaS Product Engineering</option>
-                                        <option value="custom">Custom Software & API Design</option>
-                                        <option value="cloud">Cloud Migration & Advisory</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label for="message" class="block text-sm font-semibold text-slate-700 mb-2">Project Overview *</label>
-                                <textarea id="message" rows="4" required placeholder="Tell us about your objectives, timeline, and tech stack requirements..." 
-                                          class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-cyan focus:border-transparent outline-none transition-all"></textarea>
-                            </div>
-
-                            <button type="submit" id="submit-btn" 
-                                    class="w-full py-4 bg-navy-900 hover:bg-slate-800 text-brand-cyan font-bold rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
-                                <span>Send Message</span>
-                                <i class="fa-solid fa-paper-plane text-sm"></i>
-                            </button>
-                        </form>
+                        </div>
                     </div>
                 </div>
 
@@ -565,110 +514,106 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-navy-950 text-slate-400 py-16 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-                
-                <!-- Column 1: Brand Info -->
-                <div class="md:col-span-2 space-y-4">
-                    <img src="Gemini_Generated_Image_mnwee7mnwee7mnwe-removebg-preview.png" 
-                         alt="Codex Consulting Logo" 
-                         class="h-12 w-auto object-contain"
-                         onerror="this.src='https://placehold.co/200x60/0b192c/00b4d8?text=CODEX';">
-                    <p class="text-sm text-slate-400 max-w-sm leading-relaxed">
-                        San Francisco's premier software architecture and technical consultancy. We transform complex engineering bottlenecks into high-performing digital platforms.
-                    </p>
-                </div>
-
-                <!-- Column 2: Navigation -->
-                <div>
-                    <h5 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Quick Links</h5>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#home" class="hover:text-brand-cyan transition-colors">Home</a></li>
-                        <li><a href="#about" class="hover:text-brand-cyan transition-colors">About Us</a></li>
-                        <li><a href="#services" class="hover:text-brand-cyan transition-colors">Services</a></li>
-                        <li><a href="#projects" class="hover:text-brand-cyan transition-colors">Featured Projects</a></li>
-                        <li><a href="#contact" class="hover:text-brand-cyan transition-colors">Contact Us</a></li>
-                    </ul>
-                </div>
-
-                <!-- Column 3: Tech Focus -->
-                <div>
-                    <h5 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Core Practices</h5>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#services" class="hover:text-brand-cyan transition-colors">Artificial Intelligence</a></li>
-                        <li><a href="#services" class="hover:text-brand-cyan transition-colors">SaaS Architectures</a></li>
-                        <li><a href="#services" class="hover:text-brand-cyan transition-colors">Custom Code Refactoring</a></li>
-                        <li><a href="#services" class="hover:text-brand-cyan transition-colors">Cloud Optimization</a></li>
-                    </ul>
-                </div>
-
+    <footer class="bg-navy-950 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <img src="Gemini_Generated_Image_mnwee7mnwee7mnwe-removebg-preview.png" alt="Codex Logo" class="h-8 w-auto object-contain" onerror="this.src='https://placehold.co/120x40/0b192c/00b4d8?text=CODEX';">
+                <span class="text-xs font-mono text-slate-500">© 2026 Codex Consulting Group. All rights reserved.</span>
             </div>
-
-            <!-- Bottom Copyright Bar -->
-            <div class="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
-                <p>&copy; 2026 Codex Consulting Group LLC. All rights reserved. San Francisco, CA.</p>
-                <div class="flex space-x-6">
-                    <a href="#" class="hover:text-slate-400 transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-slate-400 transition-colors">Terms of Service</a>
-                </div>
+            <div class="flex space-x-6 text-sm">
+                <a href="#home" class="hover:text-brand-cyan transition-colors">Privacy Policy</a>
+                <a href="#home" class="hover:text-brand-cyan transition-colors">Terms of Service</a>
+                <a href="#payment-portal" class="hover:text-brand-cyan transition-colors">Checkout Portal</a>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript Interactions -->
+    <!-- Mobile Menu Toggle Script & Stripe Integration -->
     <script>
-        // Mobile menu toggle logic
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        // Mobile Navigation Toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuIcon = document.getElementById('menu-icon');
 
-        mobileMenuBtn.addEventListener('click', () => {
+        menuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
-            if (mobileMenu.classList.contains('hidden')) {
-                menuIcon.className = 'fa-solid fa-bars text-2xl';
-            } else {
-                menuIcon.className = 'fa-solid fa-xmark text-2xl';
-            }
+            menuIcon.classList.toggle('fa-bars');
+            menuIcon.classList.toggle('fa-xmark');
         });
 
-        // Close mobile menu when clicking any navigation link
         document.querySelectorAll('.mobile-link').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
-                menuIcon.className = 'fa-solid fa-bars text-2xl';
+                menuIcon.classList.add('fa-bars');
+                menuIcon.classList.remove('fa-xmark');
             });
         });
 
-        // Handle contact form submission
-        function handleFormSubmit(event) {
-            event.preventDefault();
-            
-            const btn = document.getElementById('submit-btn');
-            const toast = document.getElementById('form-toast');
-            
-            // Show loading state
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...`;
-
-            // Simulate form submission delay
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.innerHTML = `<span>Send Message</span> <i class="fa-solid fa-paper-plane text-sm"></i>`;
+        // Initialize Stripe Checkout Sdk
+        async function initStripePayment() {
+            try {
+                // Replace with your real Stripe Publishable Key
+                const PUBLISHABLE_KEY = 'pk_test_TYooMQauvdEDq54NiTphI7jx'; 
                 
-                // Display success message
-                toast.className = "mb-6 p-4 rounded-xl text-sm font-medium bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 block";
-                toast.innerHTML = `<i class="fa-solid fa-circle-check mr-2"></i> Thank you! Your message has been received. Our team will respond within 24 hours.`;
-                
-                // Reset form inputs
-                document.getElementById('contact-form').reset();
+                const stripe = Stripe(PUBLISHABLE_KEY, {
+                    betas: ['custom_checkout_payment_form_1']
+                });
 
-                // Auto-hide toast after 6 seconds
-                setTimeout(() => {
-                    toast.className = "hidden";
-                }, 6000);
-            }, 1200);
+                // Fetch client secret from server endpoint
+                const clientSecret = await fetch('/create-checkout-session', { method: 'POST' })
+                    .then((response) => response.json())
+                    .then((json) => json.client_secret);
+
+                const appearance = {
+                    "theme": "stripe",
+                    "inputs": "spaced",
+                    "labels": "auto",
+                    "variables": {
+                        "borderRadius": "6px",
+                        "colorBackground": "#ffffff",
+                        "colorDanger": "#df1b41",
+                        "colorPrimary": "#008b99",
+                        "colorSuccess": "#00c853",
+                        "colorText": "#30313d",
+                        "fontFamily": "default",
+                        "fontSizeBase": "15px",
+                        "spacingUnit": "4px"
+                    }
+                };
+
+                // Create Checkout instance
+                const checkout = stripe.initCheckoutFormSdk({
+                    clientSecret,
+                    appearance
+                });
+
+                // Clear loading spinner
+                document.getElementById('checkout-form').innerHTML = '';
+
+                // Create and mount the Embedded form
+                const checkoutForm = checkout.createForm({ layout: 'expanded' });
+                checkoutForm.mount('#checkout-form');
+
+                const loadActionsResult = await checkout.loadActions();
+                if (loadActionsResult.type === 'success') {
+                    checkoutForm.on('confirm', (event) => {
+                        loadActionsResult.actions.confirm({ formConfirmEvent: event });
+                    });
+                }
+            } catch (error) {
+                console.error("Stripe Checkout Initialization Error:", error);
+                document.getElementById('checkout-form').innerHTML = `
+                    <div class="text-center py-8 text-slate-600">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-500 text-3xl mb-2"></i>
+                        <p class="text-sm font-semibold">Unable to load payment portal automatically.</p>
+                        <p class="text-xs text-slate-400 mt-1">Please ensure your <code>/create-checkout-session</code> server endpoint is active.</p>
+                    </div>
+                `;
+            }
         }
+
+        // Initialize payment on page load
+        window.addEventListener('DOMContentLoaded', initStripePayment);
     </script>
 </body>
 </html>
