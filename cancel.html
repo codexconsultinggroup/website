@@ -1,1 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Incomplete | Codex Consulting Group</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: { 800: '#0c1524', 900: '#070d17', 950: '#04070d' },
+                        brand: { teal: '#00b4d8', cyan: '#38bdf8' }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .cyber-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-navy-950 text-slate-100 font-sans antialiased min-h-screen flex items-center justify-center p-4 cyber-grid relative">
+    <div class="max-w-md w-full bg-navy-900 border border-slate-800 rounded-3xl p-8 sm:p-10 shadow-2xl relative text-center">
+        <div class="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center text-3xl mx-auto mb-6">
+            <i class="fa-solid fa-arrow-rotate-left"></i>
+        </div>
 
+        <span class="px-3 py-1 bg-amber-500/10 text-amber-400 font-mono rounded-md text-[11px] uppercase tracking-wider">
+            Checkout Aborted
+        </span>
+
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-4 tracking-tight">
+            Transaction Not Completed
+        </h1>
+
+        <p class="text-slate-400 text-sm mt-3 leading-relaxed">
+            No charges were incurred. If you ran into billing errors, want custom invoicing, or need to discuss scope adjustments before retaining, contact our team.
+        </p>
+
+        <div class="mt-8 flex flex-col gap-3">
+            <a href="https://codexconsultinggroup.com/#payment-portal" class="w-full inline-block py-3 px-6 bg-brand-cyan hover:bg-teal-400 text-navy-950 font-bold rounded-xl text-xs uppercase tracking-wider transition-all">
+                Try Checkout Again
+            </a>
+            <a href="mailto:contact@codexconsultinggroup.com" class="w-full inline-block py-3 px-6 bg-navy-950 hover:bg-slate-800 text-slate-300 font-semibold rounded-xl text-xs uppercase tracking-wider border border-slate-800 transition-all">
+                Contact Enterprise Support
+            </a>
+        </div>
+    </div>
+</body>
+</html>
