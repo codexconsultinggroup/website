@@ -497,7 +497,7 @@
         const checkoutLink = document.getElementById('calc-checkout-link');
 
         function updateCalculation() {
-            const count = parseInt(sprintRange.value);
+            const count = parseInt(sprintRange.value, 10);
             sprintLabel.innerText = `${count} ${count === 1 ? 'Engagement Unit' : 'Engagement Units'}`;
             const total = currentRate * count;
             totalDisplay.innerText = '$' + total.toLocaleString();
@@ -512,7 +512,7 @@
                 });
                 btn.classList.add('border-brand-cyan', 'bg-brand-cyan/10');
                 btn.classList.remove('border-slate-800', 'bg-navy-950');
-                currentRate = parseInt(btn.dataset.rate);
+                currentRate = parseInt(btn.dataset.rate, 10);
                 activeLink = btn.dataset.link;
                 updateCalculation();
             });
