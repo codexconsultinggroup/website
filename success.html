@@ -1,1 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful | Codex Consulting Group</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: { 800: '#0c1524', 900: '#070d17', 950: '#04070d' },
+                        brand: { teal: '#00b4d8', cyan: '#38bdf8' }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .cyber-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-navy-950 text-slate-100 font-sans antialiased min-h-screen flex items-center justify-center p-4 cyber-grid relative">
+    <div class="max-w-md w-full bg-navy-900 border border-slate-800 rounded-3xl p-8 sm:p-10 shadow-2xl relative text-center">
+        <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-3xl mx-auto mb-6">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
 
+        <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 font-mono rounded-md text-[11px] uppercase tracking-wider">
+            Transaction Confirmed
+        </span>
+
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-4 tracking-tight">
+            Engagement Retained
+        </h1>
+
+        <p class="text-slate-400 text-sm mt-3 leading-relaxed">
+            Your payment has cleared through Stripe. A confirmation receipt and onboarding kickoff link have been sent to your billing email.
+        </p>
+
+        <div class="mt-6 p-4 rounded-xl bg-navy-950 border border-slate-800 text-left font-mono text-xs space-y-2">
+            <div class="flex justify-between text-slate-400">
+                <span>STATUS:</span>
+                <span class="text-emerald-400 font-bold">200 OK / SECURED</span>
+            </div>
+            <div class="flex justify-between text-slate-400">
+                <span>NEXT STEP:</span>
+                <span class="text-slate-200">Engineer Match & Intake</span>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <a href="https://codexconsultinggroup.com" class="w-full inline-block py-3 px-6 bg-brand-cyan hover:bg-teal-400 text-navy-950 font-bold rounded-xl text-xs uppercase tracking-wider transition-all">
+                Return to Codex Portal
+            </a>
+        </div>
+    </div>
+</body>
+</html>
