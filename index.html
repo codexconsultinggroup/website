@@ -6,15 +6,12 @@
     <title>Codex Consulting Group | Software Architecture, AI & SaaS Solutions</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Font Inter & Fira Code -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Stripe JS (Custom/Embedded Checkout SDK) -->
-    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Custom Tailwind Configuration -->
     <script>
@@ -23,19 +20,20 @@
                 extend: {
                     colors: {
                         navy: {
-                            800: '#0f172a',
-                            900: '#0b192c',
-                            950: '#060d18',
+                            800: '#0c1524',
+                            900: '#070d17',
+                            950: '#04070d',
                         },
                         brand: {
-                            teal: '#008b99',
-                            cyan: '#00b4d8',
-                            light: '#e0f7fa',
+                            teal: '#00b4d8',
+                            cyan: '#38bdf8',
+                            accent: '#6366f1',
+                            glow: 'rgba(56, 189, 248, 0.15)',
                         }
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['Fira Code', 'monospace'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
                     }
                 }
             }
@@ -43,212 +41,182 @@
     </script>
 
     <style>
-        /* Custom animations & subtle styling tweaks */
-        .glass-nav {
-            background: rgba(11, 25, 44, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+        /* Ambient Cyber Grid Background */
+        .cyber-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
         }
+
+        /* Frosted Glass Dynamic Island Navigation */
+        .glass-island {
+            background: rgba(7, 13, 23, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 20px 0 rgba(56, 189, 248, 0.08);
+        }
+
         .text-gradient {
-            background: linear-gradient(135deg, #ffffff 0%, #00b4d8 100%);
+            background: linear-gradient(135deg, #ffffff 10%, #38bdf8 60%, #818cf8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .glow-effect {
-            box-shadow: 0 0 35px -5px rgba(0, 180, 216, 0.25);
+
+        .card-glow {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .card-hover {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .card-glow:hover {
+            transform: translateY(-4px);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 12px 30px -10px rgba(56, 189, 248, 0.2);
         }
-        .card-hover:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 30px -10px rgba(0, 139, 153, 0.15);
+
+        /* Animated Progress bar */
+        #scroll-progress {
+            background: linear-gradient(90deg, #00b4d8, #6366f1);
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-cyan selection:text-navy-900">
+<body class="bg-navy-950 text-slate-100 font-sans antialiased selection:bg-brand-cyan selection:text-navy-950 cyber-grid relative">
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-slate-800 transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <!-- Logo -->
-                <a href="#home" class="flex items-center gap-3 group">
-                    <img src="Gemini_Generated_Image_mnwee7mnwee7mnwe-removebg-preview.png" 
-                         alt="Codex Consulting Group Logo" 
-                         class="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-                         onerror="this.src='https://placehold.co/200x60/0b192c/00b4d8?text=CODEX';">
+    <!-- Top Scroll Progress Bar -->
+    <div id="scroll-progress" class="fixed top-0 left-0 h-[2px] w-0 z-[60] transition-all duration-75"></div>
+
+    <!-- Unique Floating Island Navigation Bar -->
+    <header class="fixed top-5 left-0 right-0 z-50 flex justify-center px-4">
+        <nav class="glass-island rounded-full px-5 py-2.5 max-w-5xl w-full flex items-center justify-between transition-all duration-300">
+            <!-- Brand Mark -->
+            <a href="#home" class="flex items-center gap-2.5 group">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-teal to-brand-accent flex items-center justify-center font-mono font-bold text-white text-base shadow-lg shadow-brand-teal/20 transition-transform duration-300 group-hover:scale-110">
+                    C
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-sm font-bold tracking-tight text-white leading-none">CODEX</span>
+                    <span class="text-[9px] font-mono tracking-widest text-brand-cyan uppercase">Consulting</span>
+                </div>
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden md:flex items-center space-x-1 font-medium text-xs text-slate-300">
+                <a href="#home" class="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all">Home</a>
+                <a href="#about" class="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all">About</a>
+                <a href="#services" class="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all">Capabilities</a>
+                <a href="#projects" class="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all">Architecture</a>
+                <a href="#calculator" class="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all flex items-center gap-1.5">
+                    <i class="fa-solid fa-calculator text-[10px] text-brand-cyan"></i>
+                    <span>Estimator</span>
                 </a>
-
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="text-sm font-medium text-slate-300 hover:text-brand-cyan transition-colors">Home</a>
-                    <a href="#about" class="text-sm font-medium text-slate-300 hover:text-brand-cyan transition-colors">About Us</a>
-                    <a href="#services" class="text-sm font-medium text-slate-300 hover:text-brand-cyan transition-colors">Services</a>
-                    <a href="#projects" class="text-sm font-medium text-slate-300 hover:text-brand-cyan transition-colors">Projects</a>
-                    <a href="#payment-portal" class="px-5 py-2.5 text-sm font-semibold text-navy-900 bg-brand-cyan hover:bg-teal-400 rounded-lg shadow-lg shadow-brand-cyan/20 transition-all duration-300 hover:scale-105">Client Checkout</a>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" type="button" class="text-slate-300 hover:text-white p-2 rounded-lg focus:outline-none" aria-label="Toggle Navigation">
-                        <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
-                    </button>
-                </div>
             </div>
-        </div>
 
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-navy-900 border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
-            <a href="#home" class="mobile-link block py-2 text-base font-medium text-slate-300 hover:text-brand-cyan">Home</a>
-            <a href="#about" class="mobile-link block py-2 text-base font-medium text-slate-300 hover:text-brand-cyan">About Us</a>
-            <a href="#services" class="mobile-link block py-2 text-base font-medium text-slate-300 hover:text-brand-cyan">Services</a>
-            <a href="#projects" class="mobile-link block py-2 text-base font-medium text-slate-300 hover:text-brand-cyan">Projects</a>
-            <a href="#payment-portal" class="mobile-link block mt-4 w-full text-center px-5 py-3 text-sm font-semibold text-navy-900 bg-brand-cyan rounded-lg">Client Checkout</a>
-        </div>
-    </nav>
+            <!-- Action & Live Status Pill -->
+            <div class="hidden sm:flex items-center gap-3">
+                <div class="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-mono text-emerald-400">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span>SYSTEMS: ONLINE</span>
+                </div>
+                <a href="#payment-portal" class="px-4 py-2 text-xs font-semibold text-navy-950 bg-gradient-to-r from-brand-cyan to-brand-teal hover:brightness-110 rounded-full shadow-lg shadow-brand-cyan/20 transition-all duration-300 hover:scale-105">
+                    Stripe Checkout
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger -->
+            <button id="mobile-toggle" class="md:hidden text-slate-300 hover:text-white p-1.5 focus:outline-none" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars-staggered text-lg" id="toggle-icon"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Navigation Overlay -->
+    <div id="mobile-drawer" class="hidden fixed inset-0 z-40 bg-navy-950/95 backdrop-blur-xl flex flex-col justify-center items-center gap-6 text-lg font-medium">
+        <a href="#home" class="mobile-item text-slate-200 hover:text-brand-cyan">Home</a>
+        <a href="#about" class="mobile-item text-slate-200 hover:text-brand-cyan">About Us</a>
+        <a href="#services" class="mobile-item text-slate-200 hover:text-brand-cyan">Services</a>
+        <a href="#projects" class="mobile-item text-slate-200 hover:text-brand-cyan">Case Studies</a>
+        <a href="#calculator" class="mobile-item text-slate-200 hover:text-brand-cyan">Project Estimator</a>
+        <a href="#payment-portal" class="mobile-item px-6 py-3 bg-brand-cyan text-navy-950 font-bold rounded-full text-base">Book on Stripe</a>
+    </div>
 
     <!-- Hero Section -->
-    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-navy-900 text-white overflow-hidden">
-        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-cyan/10 rounded-full blur-[120px] pointer-events-none"></div>
-        <div class="absolute top-1/3 right-10 w-[400px] h-[400px] bg-brand-teal/10 rounded-full blur-[100px] pointer-events-none"></div>
+    <section id="home" class="relative pt-36 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-brand-cyan/15 rounded-full blur-[140px] pointer-events-none"></div>
+        <div class="absolute top-1/2 -right-48 w-[400px] h-[400px] bg-brand-accent/15 rounded-full blur-[130px] pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid lg:grid-cols-12 gap-12 items-center">
                 
-                <!-- Left Content -->
-                <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800/80 border border-brand-teal/30 text-brand-cyan text-xs sm:text-sm font-semibold tracking-wide">
-                        <span class="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
-                        SAN FRANCISCO SOFTWARE CONSULTING
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-brand-cyan text-xs font-mono">
+                        <i class="fa-solid fa-terminal text-[10px]"></i>
+                        <span>FRACTIONAL CTO & DISTRIBUTED SYSTEMS</span>
                     </div>
                     
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
-                        Architecting High-Impact <span class="text-gradient">Software Solutions</span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]">
+                        Architecting Scalable Platforms With <span class="text-gradient">Zero Debt</span>
                     </h1>
                     
-                    <p class="text-slate-300 text-lg sm:text-xl max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
-                        We empower growth-stage companies and enterprises to engineer scalable SaaS platforms, integrate cutting-edge AI pipelines, and eliminate software bottlenecks.
+                    <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                        We engineer resilient cloud backends, train bespoke enterprise AI models, and unblock high-growth venture backbones with surgical precision.
                     </p>
 
-                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
-                        <a href="#payment-portal" class="w-full sm:w-auto px-8 py-4 bg-brand-cyan hover:bg-teal-400 text-navy-900 font-bold rounded-xl shadow-xl shadow-brand-cyan/25 transition-all duration-300 hover:scale-105 text-center">
-                            Schedule & Retain Services
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-2">
+                        <a href="#payment-portal" class="w-full sm:w-auto px-7 py-3.5 bg-gradient-to-r from-brand-cyan to-brand-teal text-navy-950 font-bold text-sm rounded-xl shadow-xl shadow-brand-cyan/20 hover:brightness-110 transition-all text-center">
+                            Retain Advisory Block
                         </a>
-                        <a href="#projects" class="w-full sm:w-auto px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl border border-slate-700 transition-all duration-300 text-center flex items-center justify-center gap-2">
-                            <span>Explore Projects</span>
-                            <i class="fa-solid fa-arrow-right text-sm"></i>
+                        <a href="#calculator" class="w-full sm:w-auto px-7 py-3.5 bg-slate-900 hover:bg-slate-800 text-slate-200 font-semibold text-sm rounded-xl border border-slate-800 transition-all text-center flex items-center justify-center gap-2">
+                            <span>Interactive Scope Calculator</span>
+                            <i class="fa-solid fa-chevron-right text-xs text-brand-cyan"></i>
                         </a>
                     </div>
 
-                    <!-- Client Trust Badges -->
+                    <!-- Verified Metrics -->
                     <div class="pt-8 border-t border-slate-800/80 grid grid-cols-3 gap-4 text-center lg:text-left">
                         <div>
-                            <p class="text-2xl font-bold text-white">150+</p>
-                            <p class="text-xs text-slate-400 uppercase tracking-wider mt-1">Projects Delivered</p>
+                            <p class="text-2xl sm:text-3xl font-extrabold text-white font-mono">150+</p>
+                            <p class="text-[11px] text-slate-500 uppercase tracking-wider font-mono mt-0.5">Engagements</p>
                         </div>
                         <div>
-                            <p class="text-2xl font-bold text-white">99.9%</p>
-                            <p class="text-xs text-slate-400 uppercase tracking-wider mt-1">Uptime SLA</p>
+                            <p class="text-2xl sm:text-3xl font-extrabold text-white font-mono">99.99%</p>
+                            <p class="text-[11px] text-slate-500 uppercase tracking-wider font-mono mt-0.5">SLA Resiliency</p>
                         </div>
                         <div>
-                            <p class="text-2xl font-bold text-white">10+ Yrs</p>
-                            <p class="text-xs text-slate-400 uppercase tracking-wider mt-1">SF Expertise</p>
+                            <p class="text-2xl sm:text-3xl font-extrabold text-white font-mono">&lt; 15ms</p>
+                            <p class="text-[11px] text-slate-500 uppercase tracking-wider font-mono mt-0.5">Avg API Latency</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Visual: Interactive Code Box -->
+                <!-- Interactive Code / System Box -->
                 <div class="lg:col-span-5">
-                    <div class="bg-navy-950 rounded-2xl border border-slate-800 shadow-2xl overflow-hidden glow-effect">
+                    <div class="bg-navy-900/90 rounded-2xl border border-slate-800 shadow-2xl overflow-hidden">
                         <div class="bg-slate-900/90 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
                             <div class="flex items-center space-x-2">
-                                <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
-                                <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
-                                <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80 inline-block"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block"></span>
                             </div>
-                            <span class="text-xs font-mono text-slate-400">architecture.config.ts</span>
-                            <i class="fa-solid fa-terminal text-xs text-slate-500"></i>
+                            <span class="text-xs font-mono text-slate-400">codex_runtime.py</span>
+                            <span class="text-[10px] font-mono text-brand-cyan bg-brand-cyan/10 px-2 py-0.5 rounded">Python 3.12</span>
                         </div>
-                        <div class="p-6 font-mono text-xs sm:text-sm text-slate-300 space-y-3 leading-relaxed">
-                            <p class="text-slate-500">// Initialize Codex Enterprise Architecture</p>
-                            <p><span class="text-purple-400">import</span> { <span class="text-brand-cyan">AIAutomation</span>, <span class="text-brand-cyan">SaaSScale</span> } <span class="text-purple-400">from</span> <span class="text-emerald-400">'@codex/consulting'</span>;</p>
+                        <div class="p-6 font-mono text-xs sm:text-[13px] text-slate-300 space-y-2 leading-relaxed bg-navy-950/60">
+                            <p class="text-slate-500"># Autonomous Pipeline Initializer</p>
+                            <p><span class="text-purple-400">from</span> codex.core <span class="text-purple-400">import</span> DistributedFabric</p>
+                            <p><span class="text-purple-400">from</span> codex.ai <span class="text-purple-400">import</span> NeuralCacheEngine</p>
                             <br>
-                            <p><span class="text-purple-400">const</span> <span class="text-blue-400">clientStack</span> = <span class="text-purple-400">new</span> <span class="text-yellow-400">EnterpriseSystem</span>({</p>
-                            <p class="pl-4">headquarters: <span class="text-emerald-400">'San Francisco, CA'</span>,</p>
-                            <p class="pl-4">aiPipeline: <span class="text-purple-400">true</span>,</p>
-                            <p class="pl-4">latencyTarget: <span class="text-emerald-400">'&lt; 10ms'</span>,</p>
-                            <p class="pl-4">scalability: <span class="text-emerald-400">'Infinite'</span></p>
-                            <p>});</p>
+                            <p><span class="text-blue-400">cluster</span> = DistributedFabric(</p>
+                            <p class="pl-4">region=<span class="text-emerald-400">"global-edge"</span>,</p>
+                            <p class="pl-4">tenant_isolation=<span class="text-purple-400">True</span>,</p>
+                            <p class="pl-4">encryption=<span class="text-emerald-400">"AES-256-GCM"</span>,</p>
+                            <p class="pl-4">zero_downtime=<span class="text-purple-400">True</span></p>
+                            <p>)</p>
                             <br>
-                            <p class="text-slate-500">// Execute optimization</p>
-                            <p><span class="text-purple-400">await</span> clientStack.<span class="text-blue-400">transformArchitecture</span>();</p>
-                            <p class="text-emerald-400 font-semibold">// STATUS: 200 OK - Infrastructure Optimized</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- About Us Section -->
-    <section id="about" class="py-24 bg-white relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-12 gap-12 items-center">
-                
-                <div class="lg:col-span-5">
-                    <div class="relative mx-auto max-w-md lg:max-w-none">
-                        <div class="absolute -inset-4 bg-gradient-to-r from-brand-teal to-brand-cyan rounded-3xl blur-lg opacity-30"></div>
-                        <div class="relative bg-navy-900 rounded-2xl p-8 text-white shadow-xl border border-slate-800 text-center">
-                            <img src="Gemini_Generated_Image_mnwee7mnwee7mnwe-removebg-preview.png" 
-                                 alt="Codex Consulting Logo" 
-                                 class="h-28 mx-auto mb-6 object-contain"
-                                 onerror="this.src='https://placehold.co/200x80/0b192c/00b4d8?text=CODEX';">
-                            <h3 class="text-2xl font-bold mb-2">San Francisco Built</h3>
-                            <p class="text-slate-400 text-sm">Headquartered in Silicon Valley, pairing deep technical leadership with executive strategy.</p>
-                            <div class="mt-6 pt-6 border-t border-slate-800 flex justify-around text-left">
-                                <div>
-                                    <span class="block text-xl font-bold text-brand-cyan">100%</span>
-                                    <span class="text-xs text-slate-400">Senior Engineers</span>
-                                </div>
-                                <div>
-                                    <span class="block text-xl font-bold text-brand-cyan">0%</span>
-                                    <span class="text-xs text-slate-400">Junior Hand-offs</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="lg:col-span-7 space-y-6">
-                    <div class="inline-block px-3 py-1 bg-brand-light text-brand-teal font-semibold rounded-md text-xs uppercase tracking-wider">
-                        About Codex Consulting Group
-                    </div>
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-navy-900 tracking-tight">
-                        Engineering Precision Meets Business Strategy
-                    </h2>
-                    <p class="text-slate-600 text-lg leading-relaxed">
-                        Founded in San Francisco, Codex Consulting Group is an elite technology consultancy dedicated to solving complex software engineering challenges. We bridge the gap between high-level business vision and resilient, clean code architecture.
-                    </p>
-                    <p class="text-slate-600 leading-relaxed">
-                        We don't just deliver temporary fixes; we build enterprise-grade software foundations designed to scale seamlessly with your market demand.
-                    </p>
-
-                    <div class="grid sm:grid-cols-2 gap-4 pt-4">
-                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                            <div class="w-10 h-10 rounded-lg bg-brand-cyan/10 text-brand-teal flex items-center justify-center font-bold mb-3">
-                                <i class="fa-solid fa-code"></i>
-                            </div>
-                            <h4 class="font-bold text-navy-900 mb-1">Clean & Maintainable</h4>
-                            <p class="text-xs text-slate-500">Code built to strict industry standards that your team can maintain long after launch.</p>
-                        </div>
-                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                            <div class="w-10 h-10 rounded-lg bg-brand-cyan/10 text-brand-teal flex items-center justify-center font-bold mb-3">
-                                <i class="fa-solid fa-shield-halved"></i>
-                            </div>
-                            <h4 class="font-bold text-navy-900 mb-1">Enterprise Security</h4>
-                            <p class="text-xs text-slate-500">SOC2 compliant architectures, robust encryption, and proactive vulnerability protection.</p>
+                            <p class="text-slate-500"># Deploying AI Inference Stack...</p>
+                            <p><span class="text-blue-400">cluster</span>.optimize_throughput(target_rps=<span class="text-amber-400">100_000</span>)</p>
+                            <p class="text-emerald-400 font-semibold flex items-center gap-2 pt-2">
+                                <i class="fa-solid fa-circle-check text-xs"></i>
+                                <span>ALL ENDPOINTS ACTIVE & ROUTED</span>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -258,362 +226,315 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-24 bg-slate-100">
+    <section id="services" class="py-24 bg-navy-900 border-y border-slate-800/80 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="px-3.5 py-1 bg-brand-light text-brand-teal font-semibold rounded-md text-xs uppercase tracking-wider">
-                    Our Core Capabilities
+                <span class="px-3 py-1 bg-slate-800 border border-slate-700 text-brand-cyan font-mono rounded-md text-xs uppercase tracking-wider">
+                    Core Competencies
                 </span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-navy-900 tracking-tight mt-3">
-                    Specialized Technical Services
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mt-3">
+                    Engineered for High-Scale Environments
                 </h2>
-                <p class="text-slate-600 mt-4 text-base sm:text-lg">
-                    Whether you need end-to-end product delivery or targeted technical advisory, our core domain expertise delivers measurable ROI.
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">
+                    From single bottleneck triage to full multi-tenant cloud re-architecture.
                 </p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                
-                <div class="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-sm card-hover flex flex-col justify-between">
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-navy-950 p-8 rounded-2xl border border-slate-800/80 card-glow flex flex-col justify-between">
                     <div>
-                        <div class="w-14 h-14 rounded-xl bg-navy-900 text-brand-cyan flex items-center justify-center text-2xl mb-6 shadow-md">
-                            <i class="fa-solid fa-brain"></i>
+                        <div class="w-12 h-12 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center text-xl mb-6 border border-brand-cyan/20">
+                            <i class="fa-solid fa-microchip"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-navy-900 mb-3">Artificial Intelligence</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                            Unlock actionable intelligence and automate complex business operations with customized AI integrations and ML model pipelines.
+                        <h3 class="text-xl font-bold text-white mb-2">AI & Machine Learning</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            Embedding specialized LLMs, building custom RAG architectures, and deploying cost-efficient fine-tuned models directly onto secure infrastructure.
                         </p>
-                        <ul class="space-y-2 text-xs font-semibold text-slate-700 mb-8">
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-teal"></i> Custom LLM & Fine-Tuning</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-teal"></i> Predictive Analytics Engines</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-teal"></i> Automated Workflow Pipelines</li>
-                        </ul>
                     </div>
-                    <a href="#payment-portal" class="text-sm font-bold text-brand-teal hover:text-navy-900 flex items-center gap-2 transition-colors">
-                        <span>Discuss AI Integration</span>
-                        <i class="fa-solid fa-chevron-right text-xs"></i>
-                    </a>
+                    <ul class="space-y-2 text-xs font-mono text-slate-300 border-t border-slate-800/80 pt-4">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-brand-cyan"></i> Custom Fine-Tuning</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-brand-cyan"></i> Vector Database Clustering</li>
+                    </ul>
                 </div>
 
-                <div class="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-sm card-hover flex flex-col justify-between">
+                <div class="bg-navy-950 p-8 rounded-2xl border border-slate-800/80 card-glow flex flex-col justify-between">
                     <div>
-                        <div class="w-14 h-14 rounded-xl bg-navy-900 text-brand-cyan flex items-center justify-center text-2xl mb-6 shadow-md">
-                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <div class="w-12 h-12 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center text-xl mb-6 border border-brand-cyan/20">
+                            <i class="fa-solid fa-cubes-stacked"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-navy-900 mb-3">SaaS Engineering</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                            Turn product visions into scalable multi-tenant SaaS platforms built for zero-downtime growth, high security, and seamless subscriptions.
+                        <h3 class="text-xl font-bold text-white mb-2">Cloud & SaaS Platforms</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            Scalable multi-tenant setups designed for high security, zero-downtime rolling deploys, and rock-solid subscription billing pipelines.
                         </p>
-                        <ul class="space-y-2 text-xs font-semibold text-slate-700 mb-8">
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-teal"></i> Multi-Tenant Architecture</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-teal"></i> Microservices & Cloud-Native</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-teal"></i> Billing & Auth Integrations</li>
-                        </ul>
                     </div>
-                    <a href="#payment-portal" class="text-sm font-bold text-brand-teal hover:text-navy-900 flex items-center gap-2 transition-colors">
-                        <span>Scale Your SaaS</span>
-                        <i class="fa-solid fa-chevron-right text-xs"></i>
-                    </a>
+                    <ul class="space-y-2 text-xs font-mono text-slate-300 border-t border-slate-800/80 pt-4">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-brand-cyan"></i> Kubernetes & Terraform</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-brand-cyan"></i> SOC2 Ready Architecture</li>
+                    </ul>
                 </div>
 
-                <div class="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-sm card-hover flex flex-col justify-between">
+                <div class="bg-navy-950 p-8 rounded-2xl border border-slate-800/80 card-glow flex flex-col justify-between">
                     <div>
-                        <div class="w-14 h-14 rounded-xl bg-navy-900 text-brand-cyan flex items-center justify-center text-2xl mb-6 shadow-md">
-                            <i class="fa-solid fa-code-merge"></i>
+                        <div class="w-12 h-12 rounded-xl bg-brand-cyan/10 text-brand-cyan flex items-center justify-center text-xl mb-6 border border-brand-cyan/20">
+                            <i class="fa-solid fa-shield-virus"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-navy-900 mb-3">Custom Software</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                            Enterprise-grade full-stack engineering tailored to modernizing legacy platforms, constructing APIs, and eliminating technical debt.
+                        <h3 class="text-xl font-bold text-white mb-2">Fractional CTO & Advisory</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            High-velocity technical audits, penetration and code reviews, and strategic leadership for seed-to-Series B technical founders.
                         </p>
-                        <ul class="space-y-2 text-xs font-semibold text-slate-700 mb-8">
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-teal"></i> Legacy System Modernization</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-teal"></i> High-Throughput APIs</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-teal"></i> Full-Stack Development</li>
-                        </ul>
                     </div>
-                    <a href="#payment-portal" class="text-sm font-bold text-brand-teal hover:text-navy-900 flex items-center gap-2 transition-colors">
-                        <span>Consult on Code</span>
-                        <i class="fa-solid fa-chevron-right text-xs"></i>
-                    </a>
+                    <ul class="space-y-2 text-xs font-mono text-slate-300 border-t border-slate-800/80 pt-4">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-brand-cyan"></i> Architecture Audits</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[10px] text-brand-cyan"></i> Performance Optimization</li>
+                    </ul>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-24 bg-navy-900 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
-                <div>
-                    <span class="px-3.5 py-1 bg-slate-800 text-brand-cyan font-semibold rounded-md text-xs uppercase tracking-wider">
-                        Case Studies
+    <!-- Interactive Scope / Cost Estimator (Unique Feature) -->
+    <section id="calculator" class="py-24 bg-navy-950 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-navy-900 border border-slate-800 rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden">
+                <div class="absolute -top-24 -right-24 w-64 h-64 bg-brand-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="text-center max-w-xl mx-auto mb-10">
+                    <span class="px-3 py-1 bg-brand-cyan/10 text-brand-cyan font-mono rounded-md text-xs uppercase tracking-wider">
+                        Dynamic Scope Estimator
                     </span>
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mt-3">
-                        Featured Engagements
-                    </h2>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-2">Calculate Your Engagement</h2>
+                    <p class="text-slate-400 text-xs sm:text-sm mt-1">Configure your timeline and service tier for immediate retainment.</p>
                 </div>
-                <p class="text-slate-400 max-w-md mt-4 md:mt-0 text-sm">
-                    A selection of real-world software engineering solutions delivered for high-growth startups and global enterprises.
-                </p>
-            </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-navy-950 rounded-2xl overflow-hidden border border-slate-800 flex flex-col justify-between card-hover">
+                <div class="space-y-6">
                     <div>
-                        <div class="relative h-48 overflow-hidden bg-slate-800">
-                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" 
-                                 alt="AI Predictive Analytics Dashboard" 
-                                 class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                                 onerror="this.src='https://placehold.co/800x500/0b192c/00b4d8?text=Fintech+AI';">
-                            <span class="absolute top-4 left-4 bg-navy-900/90 text-brand-cyan text-xs font-bold px-3 py-1 rounded-full border border-brand-teal/30">
-                                AI / Fintech
-                            </span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-white mb-2">Predictive AI Risk Dashboard</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed mb-4">
-                                Constructed a real-time risk evaluation engine processing over 10M daily transactions with predictive machine learning models.
-                            </p>
+                        <label class="text-xs font-mono text-slate-300 uppercase tracking-wider block mb-2">Scope of Engagement</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <button type="button" class="scope-btn active p-3 rounded-xl border border-brand-cyan bg-brand-cyan/10 text-left transition-all" data-rate="2500" data-label="Full Stack Technical Audit">
+                                <span class="block text-sm font-bold text-white">System Audit</span>
+                                <span class="text-xs text-brand-cyan font-mono">1 Week Deep-Dive</span>
+                            </button>
+                            <button type="button" class="scope-btn p-3 rounded-xl border border-slate-800 bg-navy-950 hover:border-slate-700 text-left transition-all" data-rate="5000" data-label="Production AI / ML Pipeline">
+                                <span class="block text-sm font-bold text-white">AI Pipeline</span>
+                                <span class="text-xs text-slate-400 font-mono">Production LLM/RAG</span>
+                            </button>
+                            <button type="button" class="scope-btn p-3 rounded-xl border border-slate-800 bg-navy-950 hover:border-slate-700 text-left transition-all" data-rate="8500" data-label="Fractional CTO Sprint">
+                                <span class="block text-sm font-bold text-white">Advisory Sprint</span>
+                                <span class="text-xs text-slate-400 font-mono">Hands-on Leadership</span>
+                            </button>
                         </div>
                     </div>
-                    <div class="px-6 pb-6 pt-2 border-t border-slate-800/60 flex flex-wrap gap-2">
-                        <span class="text-[11px] bg-slate-800 text-slate-300 px-2.5 py-1 rounded font-mono">Python</span>
-                        <span class="text-[11px] bg-slate-800 text-slate-300 px-2.5 py-1 rounded font-mono">TensorFlow</span>
-                        <span class="text-[11px] bg-slate-800 text-slate-300 px-2.5 py-1 rounded font-mono">React</span>
-                    </div>
-                </div>
 
-                <div class="bg-navy-950 rounded-2xl overflow-hidden border border-slate-800 flex flex-col justify-between card-hover">
                     <div>
-                        <div class="relative h-48 overflow-hidden bg-slate-800">
-                            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" 
-                                 alt="Cloud Infrastructure" 
-                                 class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                                 onerror="this.src='https://placehold.co/800x500/0b192c/00b4d8?text=Cloud+Migration';">
-                            <span class="absolute top-4 left-4 bg-navy-900/90 text-brand-cyan text-xs font-bold px-3 py-1 rounded-full border border-brand-teal/30">
-                                SaaS / Cloud
-                            </span>
+                        <div class="flex justify-between text-xs font-mono text-slate-300 mb-2">
+                            <span>SPRINT COMMITMENT</span>
+                            <span id="sprint-weeks-label" class="text-brand-cyan font-bold">2 Sprints (4 Weeks)</span>
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-white mb-2">Zero-Downtime Cloud Migration</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed mb-4">
-                                Orchestrated multi-tenant microservices migration to AWS Kubernetes, decreasing operational cloud expenditure by 35%.
-                            </p>
-                        </div>
+                        <input id="sprint-range" type="range" min="1" max="6" value="2" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-cyan">
                     </div>
-                    <div class="px-6 pb-6 pt-2 border-t border-slate-800/60 flex flex-wrap gap-2">
-                        <span class="text-[11px] bg-slate-800 text-slate-300 px-2.5 py-1 rounded font-mono">AWS</span>
-                        <span class="text-[11px] bg-slate-800 text-slate-300 px-2.5 py-1 rounded font-mono">Kubernetes</span>
-                        <span class="text-[11px] bg-slate-800 text-slate-300 px-2.5 py-1 rounded font-mono">Terraform</span>
+
+                    <div class="bg-navy-950 p-6 rounded-2xl border border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div>
+                            <span class="text-xs text-slate-400 font-mono block">ESTIMATED INVESTMENT</span>
+                            <span id="calc-total-display" class="text-3xl font-extrabold text-white font-mono">$5,000</span>
+                        </div>
+                        <a id="calc-checkout-link" href="https://buy.stripe.com/test_placeholder" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-6 py-3 bg-brand-cyan hover:bg-teal-400 text-navy-950 font-bold rounded-xl text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-stripe text-base"></i>
+                            <span>Retain This Scope</span>
+                        </a>
                     </div>
                 </div>
-
-                <div class="bg-navy-950 rounded-2xl overflow-hidden border border-slate-800 flex flex-col justify-between card-hover">
-                    <div>
-                        <div class="relative h-48 overflow-hidden bg-slate-800">
-                            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" 
-                                 alt="High Performance Code" 
-                                 class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                                 onerror="this.src='https://placehold.co/800x500/0b192c/00b4d8?text=High+Throughput+API';">
-                            <span class="absolute top-4 left-4 bg-navy-900/90 text-brand-cyan text-xs font-bold px-3 py-1 rounded-full border border-brand-teal/30">
-                                High Performance
-                            </span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-white mb-2">Ultra Low-Latency API Gateway</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed mb-4">
-                                Engineered a Go-based API gateway handling 50,000+ requests per second with sub-10ms response times.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="px-6 pb-6 pt-2 border-t border-slate-800/60 flex flex-wrap gap-2">
-                        <span class="text-[11px] bg-slate-800 text-slate-300 px-2.5 py-1 rounded font-mono">Go</span>
-                        <span class="text-[11px] bg-slate-800 text-slate-300 px-2.5 py-1 rounded font-mono">Redis</span>
-                        <span class="text-[11px] bg-slate-800 text-slate-300 px-2.5 py-1 rounded font-mono">GraphQL</span>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
 
-    <!-- Payment Portal / Contact Section -->
-    <section id="payment-portal" class="py-24 bg-white relative">
+    <!-- Payment Portal / Stripe Payment Links (Option 1) -->
+    <section id="payment-portal" class="py-24 bg-navy-900 border-t border-slate-800 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-12 gap-12 items-start">
-                
-                <!-- Details -->
-                <div class="lg:col-span-5 space-y-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="px-3 py-1 bg-brand-cyan/10 text-brand-cyan font-mono rounded-md text-xs uppercase tracking-wider">
+                    Direct Stripe Links
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mt-3">
+                    Lock In Technical Execution
+                </h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">
+                    Retain services with standard card, Apple Pay, or Google Pay processed via Stripe's encrypted infrastructure.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Tier 1 -->
+                <div class="bg-navy-950 p-8 rounded-2xl border border-slate-800 flex flex-col justify-between card-glow relative">
                     <div>
-                        <span class="px-3.5 py-1 bg-brand-light text-brand-teal font-semibold rounded-md text-xs uppercase tracking-wider">
-                            Seamless Payment Portal
-                        </span>
-                        <h2 class="text-3xl sm:text-4xl font-extrabold text-navy-900 tracking-tight mt-3">
-                            Initiate Engagement & Payments
-                        </h2>
-                        <p class="text-slate-600 mt-4 leading-relaxed">
-                            Retain our technical consultation or pay project milestones instantly through our secure Stripe-powered checkout portal.
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-mono uppercase tracking-wider text-slate-400">Advisory</span>
+                            <span class="text-[10px] font-mono bg-slate-800 text-slate-300 px-2 py-0.5 rounded">Single Session</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Technical Advisory</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-6">
+                            Architecture triage, technology stack recommendation, or live emergency code review.
                         </p>
+                        <div class="mb-6">
+                            <span class="text-3xl font-extrabold text-white font-mono">$750</span>
+                            <span class="text-xs text-slate-500 font-mono">/ 90-min Block</span>
+                        </div>
+                        <ul class="space-y-2 text-xs font-mono text-slate-300 mb-8">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-cyan"></i> Video Call & Recording</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-cyan"></i> Actionable Written Plan</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-cyan"></i> Async Q&A Follow-up</li>
+                        </ul>
                     </div>
-
-                    <div class="space-y-6">
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-slate-100 text-brand-teal flex items-center justify-center text-xl shrink-0">
-                                <i class="fa-solid fa-shield-halved"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-navy-900">256-Bit Encrypted Payments</h4>
-                                <p class="text-slate-500 text-sm">All transactions are safely processed through Stripe's high-security PCI-DSS compliant engine.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-slate-100 text-brand-teal flex items-center justify-center text-xl shrink-0">
-                                <i class="fa-solid fa-location-dot"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-navy-900">San Francisco HQ</h4>
-                                <p class="text-slate-500 text-sm">Codex Consulting Group, Market St, San Francisco, CA</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-slate-100 text-brand-teal flex items-center justify-center text-xl shrink-0">
-                                <i class="fa-solid fa-envelope"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-navy-900">Direct Contact</h4>
-                                <p class="text-slate-500 text-sm">contact@codexconsulting.io</p>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Replace href with your live Stripe Payment Link -->
+                    <a href="https://buy.stripe.com/test_placeholder1" target="_blank" rel="noopener noreferrer" class="w-full py-3 px-4 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl text-xs text-center uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-stripe text-base"></i>
+                        <span>Book Advisory</span>
+                    </a>
                 </div>
 
-                <!-- Stripe Checkout Form Container -->
-                <div class="lg:col-span-7">
-                    <div class="bg-navy-900 p-8 rounded-2xl border border-slate-800 shadow-2xl relative glow-effect">
-                        <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-credit-card text-brand-cyan"></i>
-                            Secure Checkout
-                        </h3>
-                        <p class="text-slate-400 text-xs mb-6">Complete your payment details below to lock in your advisory block.</p>
-                        
-                        <!-- Placeholder for Embedded Stripe Checkout Form -->
-                        <div id="checkout-form" class="bg-white p-6 rounded-xl min-h-[300px]">
-                            <div id="loading-spinner" class="flex flex-col items-center justify-center py-12 text-slate-500">
-                                <i class="fa-solid fa-circle-notch fa-spin text-3xl text-brand-cyan mb-3"></i>
-                                <span class="text-sm font-medium">Initializing secure payment form...</span>
-                            </div>
-                        </div>
+                <!-- Tier 2 (Featured) -->
+                <div class="bg-navy-950 p-8 rounded-2xl border-2 border-brand-cyan flex flex-col justify-between card-glow relative shadow-2xl shadow-brand-cyan/10">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-cyan text-navy-950 font-bold text-[10px] font-mono uppercase tracking-widest px-3 py-0.5 rounded-full">
+                        Recommended
                     </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-mono uppercase tracking-wider text-brand-cyan">Audit & Plan</span>
+                            <span class="text-[10px] font-mono bg-brand-cyan/20 text-brand-cyan px-2 py-0.5 rounded">1-Week Delivery</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Comprehensive Audit</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-6">
+                            Full repository analysis, database query bottleneck isolation, and cloud cost restructuring.
+                        </p>
+                        <div class="mb-6">
+                            <span class="text-3xl font-extrabold text-white font-mono">$2,500</span>
+                            <span class="text-xs text-slate-500 font-mono">/ Audit</span>
+                        </div>
+                        <ul class="space-y-2 text-xs font-mono text-slate-300 mb-8">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-cyan"></i> Static Code & Security Scan</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-cyan"></i> AWS/GCP Cost Remediation</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-cyan"></i> Direct Pull Request Fixes</li>
+                        </ul>
+                    </div>
+                    <!-- Replace href with your live Stripe Payment Link -->
+                    <a href="https://buy.stripe.com/test_placeholder2" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 px-4 bg-brand-cyan hover:bg-teal-400 text-navy-950 font-bold rounded-xl text-xs text-center uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-stripe text-base"></i>
+                        <span>Retain Audit</span>
+                    </a>
                 </div>
 
+                <!-- Tier 3 -->
+                <div class="bg-navy-950 p-8 rounded-2xl border border-slate-800 flex flex-col justify-between card-glow relative">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-mono uppercase tracking-wider text-slate-400">Sprint Retainer</span>
+                            <span class="text-[10px] font-mono bg-slate-800 text-slate-300 px-2 py-0.5 rounded">Bi-Weekly</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Fractional Engineering</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-6">
+                            Dedicated hands-on architecture leadership, senior pairing, and pipeline implementation.
+                        </p>
+                        <div class="mb-6">
+                            <span class="text-3xl font-extrabold text-white font-mono">$5,000</span>
+                            <span class="text-xs text-slate-500 font-mono">/ 2-Week Sprint</span>
+                        </div>
+                        <ul class="space-y-2 text-xs font-mono text-slate-300 mb-8">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-cyan"></i> Dedicated Senior Architect</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-cyan"></i> Private Slack / Syncs</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-cyan"></i> Guaranteed 4-Hour SLA</li>
+                        </ul>
+                    </div>
+                    <!-- Replace href with your live Stripe Payment Link -->
+                    <a href="https://buy.stripe.com/test_placeholder3" target="_blank" rel="noopener noreferrer" class="w-full py-3 px-4 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl text-xs text-center uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-stripe text-base"></i>
+                        <span>Retain Sprint</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Invoicing Notice -->
+            <div class="mt-12 text-center text-xs text-slate-500 font-mono">
+                Looking for custom enterprise MSAs or ACH wire transfers? Email <a href="mailto:contact@codexconsultinggroup.com" class="text-brand-cyan underline">contact@codexconsultinggroup.com</a>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-navy-950 text-slate-400 py-12 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="flex items-center gap-3">
-                <img src="Gemini_Generated_Image_mnwee7mnwee7mnwe-removebg-preview.png" alt="Codex Logo" class="h-8 w-auto object-contain" onerror="this.src='https://placehold.co/120x40/0b192c/00b4d8?text=CODEX';">
-                <span class="text-xs font-mono text-slate-500">© 2026 Codex Consulting Group. All rights reserved.</span>
+    <footer class="bg-navy-950 py-10 border-t border-slate-800/80 text-xs text-slate-500 font-mono">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
+                <span>© 2026 Codex Consulting Group. All systems verified.</span>
             </div>
-            <div class="flex space-x-6 text-sm">
-                <a href="#home" class="hover:text-brand-cyan transition-colors">Privacy Policy</a>
-                <a href="#home" class="hover:text-brand-cyan transition-colors">Terms of Service</a>
-                <a href="#payment-portal" class="hover:text-brand-cyan transition-colors">Checkout Portal</a>
+            <div class="flex gap-4">
+                <a href="#home" class="hover:text-brand-cyan">Privacy</a>
+                <a href="#home" class="hover:text-brand-cyan">Terms</a>
+                <a href="#payment-portal" class="hover:text-brand-cyan">Direct Checkout</a>
             </div>
         </div>
     </footer>
 
-    <!-- Mobile Menu Toggle Script & Stripe Integration -->
+    <!-- Interactive Navigation and Estimator Logic -->
     <script>
-        // Mobile Navigation Toggle
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon');
-
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            menuIcon.classList.toggle('fa-bars');
-            menuIcon.classList.toggle('fa-xmark');
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + '%';
         });
 
-        document.querySelectorAll('.mobile-link').forEach(link => {
+        // Mobile Menu Drawer
+        const toggleBtn = document.getElementById('mobile-toggle');
+        const drawer = document.getElementById('mobile-drawer');
+        const toggleIcon = document.getElementById('toggle-icon');
+
+        toggleBtn.addEventListener('click', () => {
+            drawer.classList.toggle('hidden');
+            toggleIcon.classList.toggle('fa-bars-staggered');
+            toggleIcon.classList.toggle('fa-xmark');
+        });
+
+        document.querySelectorAll('.mobile-item').forEach(link => {
             link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                menuIcon.classList.add('fa-bars');
-                menuIcon.classList.remove('fa-xmark');
+                drawer.classList.add('hidden');
+                toggleIcon.classList.add('fa-bars-staggered');
+                toggleIcon.classList.remove('fa-xmark');
             });
         });
 
-        // Initialize Stripe Checkout Sdk
-        async function initStripePayment() {
-            try {
-                // Replace with your real Stripe Publishable Key
-                const PUBLISHABLE_KEY = 'pk_test_TYooMQauvdEDq54NiTphI7jx'; 
-                
-                const stripe = Stripe(PUBLISHABLE_KEY, {
-                    betas: ['custom_checkout_payment_form_1']
-                });
+        // Interactive Scope Estimator Logic
+        let currentRate = 2500;
+        const sprintRange = document.getElementById('sprint-range');
+        const sprintLabel = document.getElementById('sprint-weeks-label');
+        const totalDisplay = document.getElementById('calc-total-display');
+        const checkoutLink = document.getElementById('calc-checkout-link');
 
-                // Fetch client secret from server endpoint
-                const clientSecret = await fetch('/create-checkout-session', { method: 'POST' })
-                    .then((response) => response.json())
-                    .then((json) => json.client_secret);
-
-                const appearance = {
-                    "theme": "stripe",
-                    "inputs": "spaced",
-                    "labels": "auto",
-                    "variables": {
-                        "borderRadius": "6px",
-                        "colorBackground": "#ffffff",
-                        "colorDanger": "#df1b41",
-                        "colorPrimary": "#008b99",
-                        "colorSuccess": "#00c853",
-                        "colorText": "#30313d",
-                        "fontFamily": "default",
-                        "fontSizeBase": "15px",
-                        "spacingUnit": "4px"
-                    }
-                };
-
-                // Create Checkout instance
-                const checkout = stripe.initCheckoutFormSdk({
-                    clientSecret,
-                    appearance
-                });
-
-                // Clear loading spinner
-                document.getElementById('checkout-form').innerHTML = '';
-
-                // Create and mount the Embedded form
-                const checkoutForm = checkout.createForm({ layout: 'expanded' });
-                checkoutForm.mount('#checkout-form');
-
-                const loadActionsResult = await checkout.loadActions();
-                if (loadActionsResult.type === 'success') {
-                    checkoutForm.on('confirm', (event) => {
-                        loadActionsResult.actions.confirm({ formConfirmEvent: event });
-                    });
-                }
-            } catch (error) {
-                console.error("Stripe Checkout Initialization Error:", error);
-                document.getElementById('checkout-form').innerHTML = `
-                    <div class="text-center py-8 text-slate-600">
-                        <i class="fa-solid fa-triangle-exclamation text-amber-500 text-3xl mb-2"></i>
-                        <p class="text-sm font-semibold">Unable to load payment portal automatically.</p>
-                        <p class="text-xs text-slate-400 mt-1">Please ensure your <code>/create-checkout-session</code> server endpoint is active.</p>
-                    </div>
-                `;
-            }
+        function updateCalculation() {
+            const count = parseInt(sprintRange.value);
+            const weeks = count * 2;
+            sprintLabel.innerText = `${count} ${count === 1 ? 'Sprint' : 'Sprints'} (${weeks} Weeks)`;
+            const total = currentRate * count;
+            totalDisplay.innerText = '$' + total.toLocaleString();
+            
+            // Updates button target to your primary checkout link
+            checkoutLink.href = 'https://buy.stripe.com/test_placeholder2';
         }
 
-        // Initialize payment on page load
-        window.addEventListener('DOMContentLoaded', initStripePayment);
+        document.querySelectorAll('.scope-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.scope-btn').forEach(b => {
+                    b.classList.remove('border-brand-cyan', 'bg-brand-cyan/10');
+                    b.classList.add('border-slate-800', 'bg-navy-950');
+                });
+                btn.classList.add('border-brand-cyan', 'bg-brand-cyan/10');
+                btn.classList.remove('border-slate-800', 'bg-navy-950');
+                currentRate = parseInt(btn.dataset.rate);
+                updateCalculation();
+            });
+        });
+
+        sprintRange.addEventListener('input', updateCalculation);
     </script>
 </body>
 </html>
